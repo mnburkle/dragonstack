@@ -14,5 +14,15 @@ const balloon = new Dragon({
     birthdate: new Date()
 });
 
+const meepy = new Dragon();
+
+// first parameter is a callback function
+// second parameter is the delay
+setTimeout(() => {
+    const grant = new Dragon();
+    console.log('grant', grant);
+}, 3000);
+
 console.log('friend', friend);
 console.log('balloon', balloon);
+console.log('meepy', meepy);
