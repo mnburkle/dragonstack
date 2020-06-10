@@ -1,6 +1,9 @@
 const DEFAULT_PROPERTIES = {
     nickname: 'unnamed',
-    birthdate: new Date()
+    // object getter, can't have parameters
+    get birthdate() {
+        return new Date()
+    }
 }
 
 class Dragon {
