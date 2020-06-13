@@ -1,17 +1,26 @@
-const Generation = require('./generation');
+const GenerationEngine = require('./generation_engine.js');
 
-const generation = new Generation();
-
-console.log('generation', generation);
-
-const grant = generation.newDragon();
-
-console.log('grant: ', grant);
+const engine = new GenerationEngine();
+engine.start();
 
 setTimeout(() => {
-    const mimar = generation.newDragon();
-    console.log('mimar', mimar);
-}, 15000);
+    engine.stop()
+}, 20000);
+
+// console.log('generation', generationEngine);
+
+// const generation = new Generation();
+
+// console.log('generation', generation);
+
+// const grant = generation.newDragon();
+
+// console.log('grant: ', grant);
+
+// setTimeout(() => {
+//     const mimar = generation.newDragon();
+//     console.log('mimar', mimar);
+// }, 15000);
 
 
 // from before we had the generation stuff:
