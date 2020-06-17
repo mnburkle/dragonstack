@@ -1,4 +1,4 @@
-const Generation = require('./generation.js')
+const Generation = require('./index')
 
 class GenerationEngine {
     constructor () {
