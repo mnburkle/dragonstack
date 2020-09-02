@@ -17,7 +17,13 @@ class GenerationEngine {
 
     buildNewGeneration() {
         this.generation = new Generation();
-        GenerationTable.storeGeneration(this.generation);
+        
+        GenerationTable.storeGeneration(this.generation)
+            .then(({ generationId }) => {
+                // now itll have the generationId from the database
+                this.generationId = generationId;
+            })
+            .catch(error => consold.error(error));
         console.log('new generation expires at', this.generation.expiration);
         this.timer = setTimeout(() => {
             this.buildNewGeneration();
