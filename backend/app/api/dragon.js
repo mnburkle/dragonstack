@@ -6,7 +6,7 @@ const router = new Router();
 // changed from /dragon/new because in index we now have /dragon/ already
 router.get('/new/', (req, res, next) => {
     const dragon = req.app.locals.engine.generation.newDragon();
-    DragonTable.storeDragon(dragon)
+    DragonTable.storeDragon('foo')
         .then(({ dragonId }) => {
             console.log('dragon id', dragonId);
             dragon.dragonId = dragonId;
