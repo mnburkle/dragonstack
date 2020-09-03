@@ -1,7 +1,9 @@
-const TRAITS = require('../data/traits');
+const TRAITS = require('../../data/traits');
+const DragonTable = require('./table')
 
 const DEFAULT_PROPERTIES = {
     nickname: 'unnamed',
+    generationId: undefined,
     // object getter, can't have parameters
     get birthdate() {
         return new Date()
@@ -22,10 +24,18 @@ const DEFAULT_PROPERTIES = {
 class Dragon {
     // accept a birthdate key, and a nickname key
     // need to have this '= {}' to provide the default value
-    constructor({birthdate, nickname, traits} = {}) {
+    constructor({birthdate, nickname, traits, generationId} = {}) {
         this.birthdate = birthdate || DEFAULT_PROPERTIES.birthdate;
         this.nickname = nickname || DEFAULT_PROPERTIES.nickname;
         this.traits = traits || DEFAULT_PROPERTIES.randomTraits;
+        this.generationId = generationId || DEFAULT_PROPERTIES.generationId;
+
+        DragonTable.storeDragon(this)
+            .then(({ dragonId }) => {
+                // only store if this storeGen completes successfully
+                console.log('new dragon with ID', dragonId);
+            })
+            .catch(error => console.error(error));
     }
 }
 

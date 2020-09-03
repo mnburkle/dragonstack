@@ -32,7 +32,7 @@ class GenerationEngine {
                     this.buildNewGeneration();
                 }, this.generation.expiration.getTime() - Date.now());
             })
-            .catch(error => consold.error(error));
+            .catch(error => console.error(error));
     }
 }
 
