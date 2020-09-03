@@ -4,7 +4,7 @@ const DragonTable = require('../dragon/table')
 const router = new Router();
 
 // changed from /dragon/new because in index we now have /dragon/ already
-router.get('/new/', (req, res) => {
+router.get('/new/', (req, res, next) => {
     const dragon = req.app.locals.engine.generation.newDragon();
     DragonTable.storeDragon(dragon)
         .then(({ dragonId }) => {
@@ -13,7 +13,7 @@ router.get('/new/', (req, res) => {
             res.json({ dragon });
         })
         .catch(error => {
-            console.error(error);
+            next(error); // sends error to next capable piece of errorhandling middleware.
         })
 }); // takes endpoint
 
