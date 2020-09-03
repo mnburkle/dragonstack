@@ -29,13 +29,6 @@ class Dragon {
         this.nickname = nickname || DEFAULT_PROPERTIES.nickname;
         this.traits = traits || DEFAULT_PROPERTIES.randomTraits;
         this.generationId = generationId || DEFAULT_PROPERTIES.generationId;
-
-        DragonTable.storeDragon(this)
-            .then(({ dragonId }) => {
-                // only store if this storeGen completes successfully
-                console.log('new dragon with ID', dragonId);
-            })
-            .catch(error => console.error(error));
     }
 }
 
