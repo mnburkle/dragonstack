@@ -47,9 +47,13 @@ const getDragonWithTraits = ({ dragonId }) => {
         //                  generationId: dragon.generationId,
         //                  )... etc;
 
-        return new Dragon(...dragon, dragonId, traits: dragonTraits);
+        return new Dragon({...dragon, dragonId, traits: dragonTraits});
     })
     .catch(error => console.error(error));
 };
+
+getDragonWithTraits({dragonId: 1})
+    .then(dragon => console.log("dragon", dragon))
+    .catch(error => console.error('error', error));
 
 module.exports = getDragonWithTraits;
