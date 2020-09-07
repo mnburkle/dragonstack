@@ -1,5 +1,6 @@
 const { Router } = require('express'); // router class is not root export so have to require it within curly braces
 const DragonTable = require('../dragon/table')
+const DragonTraitTable = require('../dragonTrait/table')
 
 const router = new Router();
 
@@ -14,7 +15,7 @@ router.get('/new/', (req, res, next) => {
         })
         .catch(error => {
             next(error); // sends error to next capable piece of errorhandling middleware.
-        })
+        });
 }); // takes endpoint
 
 module.exports = router;
