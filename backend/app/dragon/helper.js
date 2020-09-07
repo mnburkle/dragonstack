@@ -52,8 +52,10 @@ const getDragonWithTraits = ({ dragonId }) => {
     .catch(error => console.error(error));
 };
 
-getDragonWithTraits({dragonId: 1})
-    .then(dragon => console.log("dragon", dragon))
-    .catch(error => console.error('error', error));
+// test with this: if you already have dragons, else need to
+// npm run configure-dev then hit localhost:3000/dragon/new
+//getDragonWithTraits({dragonId: 1})
+//    .then(dragon => console.log("dragon", dragon))
+//    .catch(error => console.error('error', error));
 
 module.exports = getDragonWithTraits;
