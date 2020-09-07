@@ -3,6 +3,7 @@ const DragonTable = require('./table')
 
 const DEFAULT_PROPERTIES = {
     nickname: 'unnamed',
+    dragonId: undefined,
     generationId: undefined,
     // object getter, can't have parameters
     get birthdate() {
@@ -24,7 +25,8 @@ const DEFAULT_PROPERTIES = {
 class Dragon {
     // accept a birthdate key, and a nickname key
     // need to have this '= {}' to provide the default value
-    constructor({birthdate, nickname, traits, generationId} = {}) {
+    constructor({dragonId, birthdate, nickname, traits, generationId} = {}) {
+        this.dragonId  = dragonId || DEFAULT_PROPERTIES.dragonId;
         this.birthdate = birthdate || DEFAULT_PROPERTIES.birthdate;
         this.nickname = nickname || DEFAULT_PROPERTIES.nickname;
         this.traits = traits || DEFAULT_PROPERTIES.randomTraits;

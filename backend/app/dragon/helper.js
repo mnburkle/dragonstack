@@ -1,7 +1,6 @@
 const pool = require('../../databasePool');
 const DragonTable = require('./table');
-const TraitTable = require('../trait/table');
-const DragonTraitTable = require('../dragonTrait/table')
+const Dragon = require('./index');
 
 const getDragonWithTraits = ({ dragonId }) => {
     return Promise.all([
@@ -38,9 +37,19 @@ const getDragonWithTraits = ({ dragonId }) => {
     // so we still have to attach that particular dragonId that we passed in for good measure,
     // and then also the traits that we just got.
     .then(([dragon, dragonTraits]) => {
-        dragon.dragonId = dragonId;
-        dragon.traits = dragonTraits;
-        return dragon;
+        // before we return, this is just like. sql responses right
+        // so we want to actually return an instance of a dragon, not just
+        // a json object type situation.
+
+        // we could do someting like this: or we could use the SPREAD function
+        // return new Dragon(nickname: dragon.nickname,
+        //                  birthdate: dragon.birthdate,
+        //                  generationId: dragon.generationId,
+        //                  )... etc;
+
+        return new Dragon(...dragon, dragonId, traits: dragonTraits);
     })
-    .catch();
+    .catch(error => console.error(error));
 };
+
+module.exports = getDragonWithTraits;
