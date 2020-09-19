@@ -1,9 +1,11 @@
 import React, { Component } from 'react'; 
 
+const DEFAULT_GENERATION = { generationId: '', expiration: '' };
+
 // inherits a bunch of methods and features from component
 class Generation extends Component {
     // equivalent to setting "this.state" within a constructor
-    state = { generation: { generationId: -1, expiration: '2021-01-01' } };
+    state = { generation: DEFAULT_GENERATION };
 
     // so these are like hooks i guess
     componentDidMount() {
@@ -13,8 +15,21 @@ class Generation extends Component {
     fetchGeneration = () => {
         // special function exposed for javascript, pass in url, returns a promise
         fetch('http://localhost:3000/generation')
-            .then((response) => {
-                console.log('response', response); 
+            .then(response => {
+                response.json()
+                    .then(json => { 
+                        console.log('json', json); 
+                        
+                        // whenever you update state, use setState
+                        // don't modify directly with this.state = 
+                        // react applies special background stuff
+                        // when you use setState. not using it can 
+                        // lead to weird loops in react that freeze the app.
+                        this.setState({ generation: json.generation });
+                    })
+                    .catch(error => { 
+                        console.error('error', error) 
+                    });
             });
     };
 
