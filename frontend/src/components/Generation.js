@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 
 const DEFAULT_GENERATION = { generationId: '', expiration: '' };
+const MINIMUM_DELAY = 3000;
 
 // inherits a bunch of methods and features from component
 class Generation extends Component {
@@ -9,7 +10,7 @@ class Generation extends Component {
 
     // so these are like hooks i guess
     componentDidMount() {
-        this.fetchGeneration();
+        this.fetchNextGeneration();
     }
     
     fetchGeneration = () => {
@@ -24,7 +25,8 @@ class Generation extends Component {
                         // don't modify directly with this.state = 
                         // react applies special background stuff
                         // when you use setState. not using it can 
-                        // lead to weird loops in react that freeze the app.
+                        // lead to weird loops in react that freeze 
+                        // the app.
                         this.setState({ generation: json.generation });
                     })
                     .catch(error => { 
@@ -32,6 +34,17 @@ class Generation extends Component {
                     });
             });
     };
+
+    fetchNextGeneration = () => {
+        this.fetchGeneration();
+
+        let delay = new Date(this.state.generation.expiration).getTime() - new Date().getTime();
+        if(delay < MINIMUM_DELAY) {
+            delay = MINIMUM_DELAY;
+        }
+
+        setTimeout(() => this.fetchNextGeneration(), delay);
+    }
 
     // we have to have this
     render() {
