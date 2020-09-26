@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 
-const DEFAULT_DRAGON = { nickname: 'default', dragonId: '', generationId: '' };
+const DEFAULT_DRAGON = { nickname: 'default', dragonId: '', generationId: '', birthdate: '', traits: [] };
 
 class Dragon extends Component {
     state = { dragon: DEFAULT_DRAGON };
@@ -39,7 +39,9 @@ class Dragon extends Component {
         // <h4>{new Date(generation.expiration).toString()}</h4>
         return (
             <div>
-                <h3>Dragon {dragon.nickname} is a friend</h3>
+                <span>G{dragon.generationId}.</span>
+                <span>I{dragon.dragonId}. </span>
+                { dragon.traits.map(trait => trait.value).join(', ') }
             </div>
         );
     }
