@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import {Button} from 'react-bootstrap';
 import DragonAvatar from './DragonAvatar';
 
 const DEFAULT_DRAGON = { nickname: 'default', dragonId: '', generationId: '', birthdate: '', traits: [] };
@@ -33,8 +34,20 @@ class Dragon extends Component {
 
     // we have to have this
     render() {
-        // whenever state updates in this component, the dragonavatar one does too
-        return <DragonAvatar dragon={this.state.dragon} />;
+        // we have to pass a callback function because
+        // fetchdragon gets evaluated as render is called
+        // refetching and updating the state but then itll called 
+        // render again lmao
+        // <Button onClick={() => this.fetchDragon()}>New Dragon</Button>
+        // that said its not good to have () in an attribute of the render.
+        // so we fix with just this.fetchDragon (a reference to the function)
+        return (
+            <div>   
+                
+                <Button onClick={this.fetchDragon}>New Dragon</Button>
+                <DragonAvatar dragon={this.state.dragon} />
+            </div>
+        );
     }
 }
 
