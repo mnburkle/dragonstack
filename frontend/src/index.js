@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
@@ -8,7 +8,7 @@ import Dragon from './components/Dragon';
 // jsx syntax
 render(
     <div>
-        <h2>Dragon Stack from React</h2>
+        <h2>Dragon Stack</h2>
         <Generation />
         <Dragon />
     </div>,
