@@ -7,10 +7,17 @@ const MINIMUM_DELAY = 3000;
 class Generation extends Component {
     // equivalent to setting "this.state" within a constructor
     state = { generation: DEFAULT_GENERATION };
+    timer = null; // instead of undefined. null used to represent object not set.
 
     // so these are like hooks i guess
     componentDidMount() {
         this.fetchNextGeneration();
+    }
+
+    componentWillUnmount() {
+        // should have cleanup
+        // cancel network requests, invalidate timers, etc
+        clearTimeout(this.timer);
     }
     
     fetchGeneration = () => {
@@ -43,7 +50,7 @@ class Generation extends Component {
             delay = MINIMUM_DELAY;
         }
 
-        setTimeout(() => this.fetchNextGeneration(), delay);
+        this.timer = setTimeout(() => this.fetchNextGeneration(), delay);
     }
 
     // we have to have this

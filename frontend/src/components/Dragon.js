@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import DragonAvatar from './DragonAvatar';
 
 const DEFAULT_DRAGON = { nickname: 'default', dragonId: '', generationId: '', birthdate: '', traits: [] };
 
@@ -32,18 +33,8 @@ class Dragon extends Component {
 
     // we have to have this
     render() {
-        // describe component structure of this component through jsx
-        const { dragon } = this.state;
-        // ^ destructuring syntax equivalent to const generation = this.state.generation;
-
-        // <h4>{new Date(generation.expiration).toString()}</h4>
-        return (
-            <div>
-                <span>G{dragon.generationId}.</span>
-                <span>I{dragon.dragonId}. </span>
-                { dragon.traits.map(trait => trait.value).join(', ') }
-            </div>
-        );
+        // whenever state updates in this component, the dragonavatar one does too
+        return <DragonAvatar dragon={this.state.dragon} />;
     }
 }
 
