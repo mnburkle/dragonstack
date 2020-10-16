@@ -13,6 +13,10 @@ const generationReducer = (state, action) => {
     console.log('generationreducer state', state);
     console.log('generationreducer action', action);
 
+    if (action.type === 'GENERATION_ACTION_TYPE') {
+        return { generation: action.generation };
+    }
+
     // return object representing section of a store where generation object located
     return {
         generation: DEFAULT_GENERATION
@@ -23,6 +27,14 @@ const store = createStore(generationReducer);
 
 
 store.dispatch({ type: 'foo' });
+
+// type, generation payload
+store.dispatch({ 
+    type: 'GENERATION_ACTION_TYPE' ,
+    generation: { generation: 'goo', expiration: 'bar'}
+});
+
+console.log('store get state at the end', store.getState());
 
 // jsx syntax
 render(
