@@ -4,5 +4,23 @@ body {
     text-align: center;
     margin: 10%;
     font-size: 20px;
-    background-color: lightblue;
+    /* background-color: lightblue; */
+}
+
+.dragon-avatar-image-wrapper {
+    display: flex; /* designed for layering */ 
+    align-items: center;
+    justify-content: center;
+}
+
+.dragon-avatar-image-pattern {
+    position: absolute;
+}
+
+.dragon-avatar-image-background {
+    position: absolute;
+}
+
+.dragon-avatar-image {
+    z-index: 0;
 }
