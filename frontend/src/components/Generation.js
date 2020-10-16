@@ -26,8 +26,6 @@ class Generation extends Component {
             .then(response => {
                 response.json()
                     .then(json => { 
-                        console.log('json', json); 
-                        
                         // whenever you update state, use setState
                         // don't modify directly with this.state = 
                         // react applies special background stuff

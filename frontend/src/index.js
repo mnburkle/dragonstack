@@ -9,7 +9,10 @@ import './index.css';
 
 const DEFAULT_GENERATION = { generationId: '', expiration: ''};
 
-const generationReducer = () => {
+const generationReducer = (state, action) => {
+    console.log('generationreducer state', state);
+    console.log('generationreducer action', action);
+
     // return object representing section of a store where generation object located
     return {
         generation: DEFAULT_GENERATION
@@ -18,8 +21,8 @@ const generationReducer = () => {
 
 const store = createStore(generationReducer);
 
-console.log('store', store);
-console.log('store.getState()', store.getState());
+
+store.dispatch({ type: 'foo' });
 
 // jsx syntax
 render(

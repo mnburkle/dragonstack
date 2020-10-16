@@ -39,8 +39,6 @@ class DragonAvatar extends Component {
         });
 
         const { backgroundColor, build, pattern, size } = dragonPropertyMap;
-        console.log("background color, ", backgroundColor);
-        console.log("size, ", size);
         const sizing = { width: size, height: size };
 
         return (
