@@ -26,7 +26,7 @@ class Generation extends Component {
             .then(response => {
                 response.json()
                     .then(json => { 
-                        this.props.dispatch(generationActionCreator(json.generation));
+                        this.props.dispatchGeneration(json.generation);
                     })
                     .catch(error => { 
                         console.error('error', error) 
@@ -68,7 +68,15 @@ const mapStateToProps = state => {
     return { generation }; // gets attached to props of generation component
 };
 
-const componentConnector = connect(mapStateToProps);
+const mapDispatchToProps = dispatch => {
+    return {
+        dispatchGeneration: (generation) => { 
+            dispatch(generationActionCreator(generation)); 
+        }
+    };
+};
+
+const componentConnector = connect(mapStateToProps, mapDispatchToProps);
 
 // share stuff, so instead of exporting we will do
 export default componentConnector(Generation);
