@@ -31,7 +31,7 @@ fetch('http://localhost:3000/generation')
 
 // jsx syntax
 render(
-    <Provider>
+    <Provider store={store}>
         <div>
             <h2>Dragon Stack</h2>
             <Generation />

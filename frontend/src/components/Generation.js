@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import { connect } from 'react-redux';
 
 const DEFAULT_GENERATION = { generationId: '', expiration: '' };
 const MINIMUM_DELAY = 3000;
@@ -53,8 +54,10 @@ class Generation extends Component {
 
     // we have to have this
     render() {
+        console.log('this.props', this.props);
+
         // describe component structure of this component through jsx
-        const { generation } = this.state;
+        const { generation } = this.props;
         // ^ destructuring syntax equivalent to const generation = this.state.generation;
 
         return (
@@ -66,5 +69,13 @@ class Generation extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    const generation = state.generation;
+
+    return { generation }; // gets attached to props of generation component
+};
+
+const componentConnector = connect(mapStateToProps);
+
 // share stuff, so instead of exporting we will do
-export default Generation;
+export default componentConnector(Generation);
