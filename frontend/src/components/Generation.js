@@ -7,8 +7,6 @@ const MINIMUM_DELAY = 3000;
 
 // inherits a bunch of methods and features from component
 class Generation extends Component {
-    // equivalent to setting "this.state" within a constructor
-    state = { generation: DEFAULT_GENERATION };
     timer = null; // instead of undefined. null used to represent object not set.
 
     // so these are like hooks i guess
@@ -28,14 +26,6 @@ class Generation extends Component {
             .then(response => {
                 response.json()
                     .then(json => { 
-                        // whenever you update state, use setState
-                        // don't modify directly with this.state = 
-                        // react applies special background stuff
-                        // when you use setState. not using it can 
-                        // lead to weird loops in react that freeze 
-                        // the app.
-                        this.setState({ generation: json.generation });
-
                         this.props.dispatch(generationActionCreator(json.generation));
                     })
                     .catch(error => { 
@@ -47,7 +37,7 @@ class Generation extends Component {
     fetchNextGeneration = () => {
         this.fetchGeneration();
 
-        let delay = new Date(this.state.generation.expiration).getTime() - new Date().getTime();
+        let delay = new Date(this.props.generation.expiration).getTime() - new Date().getTime();
         if(delay < MINIMUM_DELAY) {
             delay = MINIMUM_DELAY;
         }
