@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux';
+import { generationActionCreator } from '../actions/generation';
 
 const DEFAULT_GENERATION = { generationId: '', expiration: '' };
 const MINIMUM_DELAY = 3000;
@@ -34,6 +35,8 @@ class Generation extends Component {
                         // lead to weird loops in react that freeze 
                         // the app.
                         this.setState({ generation: json.generation });
+
+                        this.props.dispatch(generationActionCreator(json.generation));
                     })
                     .catch(error => { 
                         console.error('error', error) 
