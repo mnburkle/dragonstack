@@ -9,7 +9,10 @@ import { generationReducer } from './reducers'; // reducers/index used by defaul
 import { generationActionCreator } from './actions/generation'; 
 import './index.css';
 
-const store = createStore(generationReducer);
+const store = createStore(
+    generationReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // gotta do this before the dispatch. need to register with redux
 // before actions are dispatched
