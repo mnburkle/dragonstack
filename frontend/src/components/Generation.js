@@ -19,20 +19,6 @@ class Generation extends Component {
         // cancel network requests, invalidate timers, etc
         clearTimeout(this.timer);
     }
-    
-    // fetchGeneration = () => {
-    //     // special function exposed for javascript, pass in url, returns a promise
-    //     fetch('http://localhost:3000/generation')
-    //         .then(response => {
-    //             response.json()
-    //                 .then(json => { 
-    //                     this.props.dispatchGeneration(json.generation);
-    //                 })
-    //                 .catch(error => { 
-    //                     console.error('error', error) 
-    //                 });
-    //         });
-    // };
 
     fetchNextGeneration = () => {
         this.props.fetchGeneration();
@@ -68,19 +54,8 @@ const mapStateToProps = state => {
     return { generation }; // gets attached to props of generation component
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatchGeneration: (generation) => { 
-            dispatch(generationActionCreator(generation)); 
-        },
-        fetchGeneration: () => {
-            fetchGeneration(dispatch);
-        }
-    };
-};
-
 // dispatch method from redux store
-const fetchGeneration = dispatch => {
+const fetchGeneration = () => dispatch => {
     return fetch('http://localhost:3000/generation')
         .then(response => response.json())
         .then(json => {
@@ -89,7 +64,10 @@ const fetchGeneration = dispatch => {
         .catch(error => console.error('error', error));
 }
 
-const componentConnector = connect(mapStateToProps, mapDispatchToProps);
+const componentConnector = connect(
+    mapStateToProps, 
+    { fetchGeneration }
+);
 
 // share stuff, so instead of exporting we will do
 export default componentConnector(Generation);
