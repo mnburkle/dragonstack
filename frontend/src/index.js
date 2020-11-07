@@ -16,6 +16,9 @@ const store = createStore(
     applyMiddleware(thunk)
 );
 
+// removed call to store.subscribe , and initial fetch because now
+// generation component is doing all that stuff by itself
+
 // jsx syntax
 render(
     <Provider store={store}>
