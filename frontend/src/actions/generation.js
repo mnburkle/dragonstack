@@ -1,12 +1,31 @@
-import { GENERATION_ACTION_TYPE } from './types';
+import { GENERATION } from './types';
 
-// generation data that will be placed within action object
-// action creator is not the action itself
-// the inner object it returns is action
-// this is wrapper around action. 
-export const generationActionCreator = (payload) => {
-    return {
-        type: GENERATION_ACTION_TYPE,
-        generation: payload
-    };
+// rather than exporting single action creator, hold code that wraps
+// around generation fetch from generation component 
+export const fetchGeneration = () => dispatch => {
+    dispatch({ type: GENERATION.FETCH });
+
+    return fetch('http://localhost:3000/generation')
+        .then(response => response.json())
+        .then(json => {
+            if (json.type === 'error') {
+                dispatch({
+                    type: GENERATION.FETCH_ERROR,
+                    message: json.message
+                });
+            } else {
+                // dispatch(generationActionCreator(json.generation))
+                dispatch({ 
+                    type: GENERATION.FETCH_SUCCESS,
+                    generation: json.generation 
+                });
+            }
+        })
+        .catch(error => {
+            // console.error('error', error);
+            dispatch({
+                type: GENERATION.FETCH_ERROR,
+                message: error.message
+            });
+        });
 }
