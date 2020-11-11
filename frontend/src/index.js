@@ -7,11 +7,11 @@ import thunk from 'redux-thunk';
 import Generation from './components/Generation';
 import Dragon from './components/Dragon';
 
-import { generationReducer } from './reducers'; // reducers/index used by default
+import rootReducer from './reducers'; // reducers/index used by default
 import './index.css';
 
 const store = createStore(
-    generationReducer,
+    rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware(thunk)
 );

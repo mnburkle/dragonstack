@@ -1,14 +1,7 @@
-import { GENERATION_ACTION_TYPE } from '../actions/types';
+import generation from './generation'; // get generationreducer
+import { combineReducers } from 'redux'; // key to scalable pattern with redux and reducers
+// take multiple reducers in folder and join them within one overall function
 
-const DEFAULT_GENERATION = { generationId: '', expiration: ''};
-
-export const generationReducer = (state, action) => {
-    if (action.type === GENERATION_ACTION_TYPE) {
-        return { generation: action.generation };
-    }
-
-    // return object representing section of a store where generation object located
-    return {
-        generation: DEFAULT_GENERATION
-    };
-};
+export default combineReducers({
+    generation 
+}); // takes in object w every reducer we want to combine. 
