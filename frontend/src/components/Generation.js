@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux';
 import { fetchGeneration } from '../actions/generation';
+import fetchStates from '../reducers/fetchStates';
 
 const DEFAULT_GENERATION = { generationId: '', expiration: '' };
 const MINIMUM_DELAY = 3000;
@@ -28,7 +29,6 @@ class Generation extends Component {
             delay = MINIMUM_DELAY;
         }
 
-        // only one generation should be fetched. THIS IS A VERY SUBTLE BUG
         this.timer = setTimeout(() => this.fetchNextGeneration(), delay);
     }
 
@@ -39,6 +39,10 @@ class Generation extends Component {
         // describe component structure of this component through jsx
         const { generation } = this.props;
         // ^ destructuring syntax equivalent to const generation = this.state.generation;
+
+        if (generation.status === fetchStates.error) {
+            return <div>{generation.messsage}</div>
+        }
 
         return (
             <div>
