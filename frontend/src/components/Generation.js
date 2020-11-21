@@ -41,7 +41,7 @@ class Generation extends Component {
         // ^ destructuring syntax equivalent to const generation = this.state.generation;
 
         if (generation.status === fetchStates.error) {
-            return <div>{generation.messsage}</div>
+            return <div>{generation.message}</div>
         }
 
         return (
