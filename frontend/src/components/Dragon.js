@@ -8,7 +8,7 @@ import fetchStates from '../reducers/fetchStates';
 class Dragon extends Component {
 
     componentDidMount() {
-        this.props.fetchDragon();
+        // this.props.fetchDragon();
     }
 
     componentWillUnmount() {
