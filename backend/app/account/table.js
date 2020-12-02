@@ -8,7 +8,6 @@ class AccountTable {
                 [username, password],
                 (error, response) => {
                     if(error) return reject(error);
-                    
                     resolve();
                 }
             );
