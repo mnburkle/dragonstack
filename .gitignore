@@ -2,3 +2,7 @@ backend/node_modules/
 secrets/
 node_modules/
 .idea/
+dist/
+.cache/
+frontend/dist
+frontend/.cache
