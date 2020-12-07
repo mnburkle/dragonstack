@@ -9,9 +9,19 @@ router.post('/signup', (req, res, next) => {
     const usernameHash = hash(username);
     const passwordHash = hash(password);
     
-    AccountTable.storeAccount({ usernameHash, passwordHash })
-        .then(() => res.json({ message: 'success!' }))
-        .catch(error => next(error));
+    AccountTable.getAccount({usernameHash})
+        .then(({ account }) => {
+            if(!account) {
+                AccountTable.storeAccount({ usernameHash, passwordHash })
+                    .then(() => res.json({ message: 'success!' }))
+                    .catch(error => next(error));
+            } else {
+                const conflictingError = new Error('This username has already been taken!');
+                conflictingError.statusCode = 409; // http code represents conflict with existing data in server. 
+                next(conflictingError);
+            }
+        })
+        .catch(error => next(error)); 
 });
 
 module.exports = router;
