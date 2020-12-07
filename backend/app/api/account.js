@@ -16,10 +16,10 @@ router.post('/signup', (req, res, next) => {
             } else {
                 const conflictingError = new Error('This username has already been taken!');
                 conflictingError.statusCode = 409; // http code represents conflict with existing data in server. 
-                throw conflictingError;
+                throw(conflictingError);
             }
         })
-        .then(() => res.json({ message: 'success!' }))
+        .then(() => res.json({ message: 'success!!' }))
         .catch(error => next(error)); 
 });
 
