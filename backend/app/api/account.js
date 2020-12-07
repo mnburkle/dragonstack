@@ -12,15 +12,14 @@ router.post('/signup', (req, res, next) => {
     AccountTable.getAccount({usernameHash})
         .then(({ account }) => {
             if(!account) {
-                AccountTable.storeAccount({ usernameHash, passwordHash })
-                    .then(() => res.json({ message: 'success!' }))
-                    .catch(error => next(error));
+                return AccountTable.storeAccount({ usernameHash, passwordHash });
             } else {
                 const conflictingError = new Error('This username has already been taken!');
                 conflictingError.statusCode = 409; // http code represents conflict with existing data in server. 
-                next(conflictingError);
+                throw conflictingError;
             }
         })
+        .then(() => res.json({ message: 'success!' }))
         .catch(error => next(error)); 
 });
 
