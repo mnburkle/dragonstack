@@ -21,8 +21,10 @@ router.post('/signup', (req, res, next) => {
             }
         })
         .then(() => {
-            setSession({ username, res });
-            res.json({ message: 'success!!' });
+            return setSession({ username, res });
+        })
+        .then(({ message }) => {
+            res.json({ message });
         })
         .catch(error => next(error)); 
 });
