@@ -29,5 +29,25 @@ router.post('/signup', (req, res, next) => {
         .catch(error => next(error)); 
 });
 
+router.post('/login', (req, res, next) => {
+    const { username, password } = req.body;
+
+    AccountTable.getAccount({ usernameHash: hash(username) })
+        .then(({ account }) => {
+            if(account && account.passwordHash === hash(password)) {
+                // set a session for account
+                return setSession({ username, res });
+            } else {
+                const error = new Error('Incorrect username/password');
+                error.statusCode = 409; // http code represents conflict with existing data in server. 
+                throw(error);
+            }
+        })
+        .then(({ message }) => {
+            res.json({ message });
+        })
+        .catch(error => next(error)); 
+});
+
 module.exports = router;
 
