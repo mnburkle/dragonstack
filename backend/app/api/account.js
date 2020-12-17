@@ -2,6 +2,7 @@ const { Router } = require('express');
 const AccountTable = require('../account/table');
 const { hash } = require('../account/helper');
 const { setSession } = require('./helper');
+const Session = require('../account/session');
 
 const router = new Router();
 
@@ -35,8 +36,9 @@ router.post('/login', (req, res, next) => {
     AccountTable.getAccount({ usernameHash: hash(username) })
         .then(({ account }) => {
             if(account && account.passwordHash === hash(password)) {
+                const { sessionId } = account;
                 // set a session for account
-                return setSession({ username, res });
+                return setSession({ username, res, sessionId });
             } else {
                 const error = new Error('Incorrect username/password');
                 error.statusCode = 409; // http code represents conflict with existing data in server. 
@@ -47,6 +49,27 @@ router.post('/login', (req, res, next) => {
             res.json({ message });
         })
         .catch(error => next(error)); 
+});
+
+router.get('/logout', (req, res, next) => {
+    // req object gonna have a cookies field because of our little cookieparser
+    // req.cookies.sessionString
+    // will be in our ole format with the pipe | character. 
+
+    const { username } = Session.parse(req.cookies.sessionString); // remember this old parse function
+    
+    AccountTable.updateSessionId({
+        sessionId: null,
+        usernameHash: hash(username)
+    })
+    .then(() => {
+        // remove session, opposite of res.cookie() 
+        // clear cookie with the key of "sessionString"
+        res.clearCookie('sessionString');
+        
+        res.json({ message: 'logout successful' });
+    })
+    .catch(error => next(error));
 });
 
 module.exports = router;
