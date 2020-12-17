@@ -6,7 +6,7 @@ class Root extends Component {
     render() {
         return (
             // based on condition, return either component 1 or 2
-            true ? <Home /> : <AuthForm />
+            false ? <Home /> : <AuthForm />
         )
     }
 };
