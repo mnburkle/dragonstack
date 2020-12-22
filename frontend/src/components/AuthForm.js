@@ -27,7 +27,7 @@ class AuthForm extends Component {
         console.log('this.state login', this.state);
     }
 
-    Error = () => {
+    get Error() {
         // make sure that we have access to account states, so fix mapstatetoprops
         if (this.props.account.status === fetchStates.error) {
             // display message
