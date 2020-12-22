@@ -15,7 +15,7 @@ const engine = new GenerationEngine();
 app.locals.engine = engine;
 
 // now identify backend server to have same origin as front end
-app.use(cors({ origin: 'http://localhost:1234' }));
+app.use(cors({ origin: 'http://localhost:1234', credentials: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Button, FormGroup, FormControl } from 'react-bootstrap'; 
-// import { signup } from '../actions/account';
+import { signup } from '../actions/account';
 
 class AuthForm extends Component {
     state = { username: '', password: '' };
@@ -17,8 +17,8 @@ class AuthForm extends Component {
     }
 
     signup = () => {
-        // const { username, password } = this.state;
-        // this.props.signup({ username, password });
+        const { username, password } = this.state;
+        this.props.signup({ username, password });
         console.log('this.state signup', this.state);
     }
 
@@ -56,4 +56,5 @@ class AuthForm extends Component {
     }
 }
 
-// export default connect(null, { signup })(AuthForm);
+// export default AuthForm;
+export default connect(null, { signup })(AuthForm);
