@@ -1,46 +1,36 @@
 import { ACCOUNT } from './types';
 import { BACKEND } from '../config';
 
-const fetchFromAccount = ({ endpoint, options, SUCCESS_TYPE}) => {
-}
-
-export const signup = ({ username, password }) => dispatch => {
+const fetchFromAccount = ({ endpoint, options, SUCCESS_TYPE}) => dispatch => {
     dispatch({ type: ACCOUNT.FETCH });
 
-    return fetch(`${BACKEND.ADDRESS}/account/signup`, {
+    return fetch(`${BACKEND.ADDRESS}/account/${endpoint}`, options)
+        .then(response => response.json())
+        .then(json => {
+            if (json.type === 'error') {
+                dispatch({ type: ACCOUNT.FETCH_ERROR, message: json.message });
+            } else {
+                dispatch({ type: SUCCESS_TYPE, ...json }); // mix in everything with spread operator 
+            }
+         })
+        .catch(error => dispatch({ 
+            type: ACCOUNT.FETCH_ERROR, message: error.message 
+        }));
+}
+
+export const signup = ({ username, password }) => fetchFromAccount({
+    endpoint: 'signup',
+    options: {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
-    })
-    .then(response => response.json())
-    .then(json => {
-        if (json.type === 'error') {
-            dispatch({ type: ACCOUNT.FETCH_ERROR, message: json.message });
-        } else {
-            dispatch({ type: ACCOUNT.FETCH_SUCCESS, ...json }); // mix in everything with spread operator 
-        }
-     })
-    .catch(error => dispatch({ 
-        type: ACCOUNT.FETCH_ERROR, message: error.message 
-    })); // note this is a post req, need extra config for fetch method
-};
+    },
+    SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS
+}); 
 
-export const logout = () => dispatch => {
-    dispatch({ type: ACCOUNT.FETCH });
-
-    return fetch(`${BACKEND.ADDRESS}/account/logout`, {
-        credentials: 'include'
-    })
-    .then(response => response.json())
-    .then(json => {
-        if (json.type === 'error') {
-            dispatch({ type: ACCOUNT.FETCH_ERROR, message: json.message });
-        } else {
-            dispatch({ type: ACCOUNT.FETCH_LOGOUT_SUCCESS, ...json });
-        }
-    })
-    .catch(error => dispatch({
-        type: ACCOUNT.FETCH_ERROR, message: error.message
-    }));
-}
+export const logout = () => fetchFromAccount({
+    endpoint: 'logout',
+    options: { credentials: 'include' },
+    SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS
+});
