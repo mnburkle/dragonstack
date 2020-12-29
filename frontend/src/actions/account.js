@@ -34,3 +34,14 @@ export const logout = () => fetchFromAccount({
     options: { credentials: 'include' },
     SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS
 });
+
+export const login = ({ username, password }) => fetchFromAccount({
+    endpoint: 'login',
+    options: {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+    },
+    SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS
+}); 
