@@ -79,10 +79,9 @@ router.get('/authenticated', (req, res, next) => {
         const error = new Error('Invalid session');
 
         error.statusCode = 400;
-
         return next(error);
     } else {
-        const { username, id } = Session.parse(SessionString);
+        const { username, id } = Session.parse(sessionString);
 
         AccountTable.getAccount({ usernameHash: hash(username) })
             .then(({ account }) => {
