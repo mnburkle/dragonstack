@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import Root from './components/Root';
+import { fetchAuthenticated } from './actions/account';
 
 import rootReducer from './reducers'; // reducers/index used by default
 import './index.css';
@@ -18,10 +19,13 @@ const store = createStore(
 // removed call to store.subscribe , and initial fetch because now
 // generation component is doing all that stuff by itself
 
-// jsx syntax
-render(
-    <Provider store={store}>
-        <Root />
-    </Provider>,
-    document.getElementById('root')
-);
+store.dispatch(fetchAuthenticated())
+    .then(() => {
+        // jsx syntax
+        render(
+            <Provider store={store}>
+                <Root />
+            </Provider>,
+            document.getElementById('root')
+        );
+    });
