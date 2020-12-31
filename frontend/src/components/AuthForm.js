@@ -5,7 +5,7 @@ import { signup, login } from '../actions/account';
 import fetchStates from '../reducers/fetchStates';
 
 class AuthForm extends Component {
-    state = { username: '', password: '' };
+    state = { username: '', password: '', buttonClicked: false };
 
     updateUsername = event => {
         // capture info about what user typed in form control
@@ -18,18 +18,25 @@ class AuthForm extends Component {
     }
 
     signup = () => {
+        this.setState({ buttonClicked: true });
+
         const { username, password } = this.state;
         this.props.signup({ username, password });
     }
 
     login = () => {
+        this.setState({ buttonClicked: true });
+
         const { username, password } = this.state;
         this.props.login({ username, password });
     }
 
     get Error() {
         // make sure that we have access to account states, so fix mapstatetoprops
-        if (this.props.account.status === fetchStates.error) {
+        if (
+            this.state.buttonClicked &&
+            this.props.account.status === fetchStates.error
+        ) {
             // display message
             return <div>{this.props.account.message}</div>
         }
